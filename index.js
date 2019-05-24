@@ -1,14 +1,5 @@
-console.log("Gerenciador Financeiro");
+var http = require('http');
 
-var client = "Alexandre Estevão";
-
-console.log("Cliente: " + client);
-
-var valProduct = 100;
-var valDiscount = 37;
-
-var discountFunc = require("./modules/calDiscount");
-
-var finalValue = discountFunc(valProduct, valDiscount);
-
-console.log("Valor Final do Produto: " + finalValue);
+http.createServer(function(req, res){
+  res.end("Gerenciador Financeiro")
+}).listen(8080);
