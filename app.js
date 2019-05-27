@@ -1,38 +1,33 @@
-//conexão com o banco de dados MySQL
-var mysql      = require('mysql');
+const Sequelize = require('sequelize');
 
-//a partir do MySQL 8 apresenta o erro ao utilizar o usuário root para conexão, necessário criar novo usuário (intrução no Readme)
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'alexandreone',
-  password : '123456',
-  database : 'testdb'
+// Option 1: Passing parameters separately
+const sequelize = new Sequelize('testdb', 'alexandreone', '123456', {
+  host: 'localhost',
+  dialect: 'mysql' /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
 });
 
-connection.connect(function(err){
-	if(err) console.log('Erro ao realizar a conexão com BD:'+ err.stack);
+sequelize.authenticate().then(function(){
+	console.log('Conexão realizda com sucesso!');
+}).catch(function(err){
+	console.log('Erro ao realizar a conexão com BD: ' + err);
 });
 
-//connection.query("INSERT INTO users(nome, email) VALUES ('Gui', 'guigui@gmail.com')", function(err, result){
-//	if(!err){
-//		console.log('Usuário cadastrado com sucesso!');
-//	}else{
-//		console.log('Erro ao cadastrar o usuário!');
-//	}
-//});
-
-//connection.query("UPDATE users SET nome = 'Marcia Estevão' WHERE id = 3", function(err, result){
-//	if(!err){
-//		console.log('Usuário alterado com sucesso!');
-//	}else{
-//		console.log('Erro: O usuário não foi editado com sucesso!')
-//	}
-//});
-
-connection.query("DELETE FROM users WHERE id = 2", function(err, result){
-	if(!err){
-		console.log('Usuário apagado com sucesso!');
-	}else{
-		console.log('Erro: Usuário não foi apagado com sucesso!');
-	}
+const Pagamento = sequelize.define('pagamentos', {
+  // attributes
+  nome: {
+    type: Sequelize.STRING,
+    //allowNull: false
+  },
+  valor: {
+    type: Sequelize.STRING
+    // allowNull defaults to true
+  }
 });
+
+Pagamento.create({
+	nome: "Energia",
+	valor: 220
+});
+
+//Criar tabela com Sequelize
+//User.sync({force: true});
