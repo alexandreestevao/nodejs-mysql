@@ -1,29 +1,26 @@
-const express = require("express"); //instanciando o módulo express
-
-const app = express(); //clonando do módulo express para uma variável
-
-//página raiz
-app.get("/", function(req, res){
-  res.sendFile(__dirname + "/src/index.html");
+//conexão com o banco de dados MySQL
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'alexandreone',
+  password : '123456',
+  database : 'testdb'
 });
 
-//página de sobre-empresa
-app.get("/sobre-empresa", function(req, res){
-  res.sendFile(__dirname + "/src/sobre-empresa.html");
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+ 
+  console.log('connected as id ' + connection.threadId);
 });
 
-//página de contato
-app.get("/contato", function(req, res){
-  res.send("Página de contato");
+connection.query('SELECT * FROM users', function(err, rows, fields){
+	if(!err){
+		console.log('Resultado:', rows);
+	}else{
+		console.log('Erro ao realizar a consulta');
+	}
 });
 
-
-
-//página de blog
-app.get("/blog", function(req, res){
-  res.send("Página do blog");
-});
-
-
-//localhost:3000
-app.listen(3000); //servidor iniciado na porta 3000
