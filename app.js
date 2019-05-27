@@ -13,10 +13,18 @@ connection.connect(function(err){
 	if(err) console.log('Erro ao realizar a conexão com BD:'+ err.stack);
 });
 
-connection.query("INSERT INTO users(nome, email) VALUES ('Gui', 'guigui@gmail.com')", function(err, result){
+//connection.query("INSERT INTO users(nome, email) VALUES ('Gui', 'guigui@gmail.com')", function(err, result){
+//	if(!err){
+//		console.log('Usuário cadastrado com sucesso!');
+//	}else{
+//		console.log('Erro ao cadastrar o usuário!');
+//	}
+//});
+
+connection.query("UPDATE users SET nome = 'Marcia Estevão' WHERE id = 3", function(err, result){
 	if(!err){
-		console.log('Usuário cadastrado com sucesso!');
+		console.log('Usuário alterado com sucesso!');
 	}else{
-		console.log('Erro ao cadastrar o usuário!');
+		console.log('Erro: O usuário não foi editado com sucesso!')
 	}
 });
